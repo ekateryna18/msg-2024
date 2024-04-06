@@ -23,16 +23,12 @@ public class MoneyUtils {
         return 1.0;
     }
 
-    public static boolean validateTransaction(AccountModel fromAccount, AccountModel toAccount, MoneyModel value){
+    public static void validateTransaction(AccountModel fromAccount, AccountModel toAccount, MoneyModel value){
         //if account is of SAVINGS type, it cant perform any transaction to either SAVINGS or CHECKING
         if(fromAccount.getAccountType() == AccountType.SAVINGS && (toAccount.getAccountType() == AccountType.SAVINGS || toAccount.getAccountType() == AccountType.CHECKING))
-            return false;
-        //in case of different currencies, we convert the value
-        if(toAccount.getBalance().getCurrency() != value.getCurrency())
-            value = convert(value, toAccount.getBalance().getCurrency());
+            throw new RuntimeException("Cannot transfer from " + fromAccount.getAccountType() + " to "+ toAccount.getAccountType());
         //if there is not enough money for the transaction, it can't be made
         if(fromAccount.getBalance().getAmount() - value.getAmount() < 0)
-            return false;
-        return true;
+            throw new RuntimeException("Not enough money into the account for the transaction");
     }
 }
