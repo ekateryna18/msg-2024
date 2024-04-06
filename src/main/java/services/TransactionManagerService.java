@@ -37,6 +37,7 @@ public class TransactionManagerService {
         fromAccount.getBalance().setAmount(fromAccount.getBalance().getAmount() - value.getAmount());
         fromAccount.getTransactions().add(transaction);
         //if it is not withdrawal, we add the money to the receiving account
+        //in case of withdrawal we dont add back the money
         if(!fromAccountId.equals(toAccountId))
         {
             toAccount.getBalance().setAmount(toAccount.getBalance().getAmount() + convertedValue.getAmount());

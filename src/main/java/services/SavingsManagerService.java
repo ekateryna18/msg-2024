@@ -48,5 +48,3 @@ public class SavingsManagerService {
         return date1.getMonth() == date2.getMonth() && date1.getYear() == date2.getYear();
     }
 }
-
-
